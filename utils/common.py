@@ -17,9 +17,9 @@ EPS = 1e-8
 FORMAT = '[%(asctime)s: %(levelname)s: %(filename)s: %(lineno)4d]: %(message)s'
 KM_TO_M = 1000
 G_ACC = 9.81
-LOSS_OF_SEPARATION_THRESH = 0.3
+LOSS_OF_SEPARATION_THRESH = 10
 THRESH = 12 #KM
-RADIUS = 10 # Km
+RADIUS = 200 # m
 DIR_LOOKUP = {
     0: 'W', 45: 'SW', 90: 'S', 135: 'SE', 180: 'E', 225: 'NE', 270: 'N', 315: 'NW'
 }
@@ -109,7 +109,7 @@ def compute_tcpa(state_i: np.array, state_j: np.array, time_steps: int = 200):
 
 def load_action_space(
     lib_path: str, index_path: str, scale: float = 1000, 
-    action_space: list = [252, 3, 20], index_space: list = [252, 6]
+    action_space: list = [36, 3, 20], index_space: list = [36, 6]
 ) -> Tuple[np.array, np.array]:
     """ Loads the action space from a trajectory lib. 
     

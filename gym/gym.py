@@ -43,7 +43,7 @@ class Gym:
         traj_lib_file = self.config.DATA.trajlib_path
         self.logger.info(f"Setting up action space from: {traj_lib_file}")
         self.traj_lib, self.index_lib = utils.load_action_space(
-            traj_lib_file, self.config.DATA.indexlib_path)
+            traj_lib_file, self.config.DATA.indexlib_path,scale=1)
         
         reflib_file = self.config.DATA.reflib_path
         self.logger.info(f"Getting reference trajectory from: {reflib_file}")

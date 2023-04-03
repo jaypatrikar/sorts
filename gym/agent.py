@@ -111,11 +111,11 @@ class Agent:
         self._tree = [self._state]
 
     def add_tree_state(self, state) -> None:
-        self._tree.append(state)
+        self._tree.append(state.clone())
     
     def step(self, state) -> None:
-        self._trajectory.append(state)
-        self._state = state
+        self._trajectory.append(state[:,:].clone())
+        self._state = state.clone()
         self._tree = []
         self._trees = []
         self._num_steps += 1

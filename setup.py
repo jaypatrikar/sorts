@@ -3,6 +3,7 @@ setup(
     name='sorts',
     version='1.0',
     packages=find_packages(),
+    include_package_data=True,
     install_requires=[
         'pandas==1.4.1',
         'matplotlib',
@@ -17,5 +18,5 @@ setup(
         'natsort'
     ],
     license='BSD 4-Clause License',
-    long_description=open('README.md').read(),
+    # long_description=open('README.md').read(),
 )

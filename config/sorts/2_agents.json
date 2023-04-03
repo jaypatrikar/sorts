@@ -1,7 +1,7 @@
 {
     "setting": "multiagent",
     "log_file": "output.log",
-    "out_dir": "./out",
+    "out_dir": "/home/airlab/ros2_ws/src/intent_isaac/sorts/out",
     "sub_dirs": ["plots", "traj"],
     "gpu": true,
     "gpu_id": 0,
@@ -17,18 +17,18 @@
 
     "planner_policy": {
         "type": "mcts",
-        "c_uct": 2,
-        "h_uct": 5,
+        "c_uct": 0.002,
+        "h_uct": 0,
         "search": "ts",
         "num_ts": 50,
         "max_time": 10
     },
 
     "social_policy": {
-        "type": "sprnn",
+        "type": "random",
         "num_predictions": 10,
-        "model_config_path": "./data/sprnn/config.json",
-        "model_path": "./data/sprnn/model.pth"
+        "model_config_path": "/home/airlab/ros2_ws/src/intent_isaac/sorts/data/sprnn/config.json",
+        "model_path": "/home/airlab/ros2_ws/src/intent_isaac/sorts/data/sprnn/model.pth"
     },
 
     "metrics": {
@@ -47,12 +47,12 @@
     },
 
     "data": {
-        "dataset_path": "./data/dataset",
+        "dataset_path": "/home/airlab/ros2_ws/src/intent_isaac/sorts/data/dataset",
         "dataset_name": "111_days",
-        "trajlib_path": "./data/traj_lib_0SI.txt",
-        "indexlib_path": "./data/traj_index_0SI.txt",
-        "reflib_path": "./data/dic2d.pkl",
-        "costmap_path": "./data/dataset/111days1/train"
+        "trajlib_path": "/home/airlab/ros2_ws/src/intent_isaac/traj_lib_0SI.txt",
+        "indexlib_path": "/home/airlab/ros2_ws/src/intent_isaac/traj_index_0SI.txt",
+        "reflib_path": "/home/airlab/ros2_ws/src/intent_isaac/sorts/data/dic2d.pkl",
+        "costmap_path": "/home/airlab/ros2_ws/src/intent_isaac/sorts/data/dataset/111_days/processed_data/train"
     },
 
     "visualization": {

@@ -50,6 +50,11 @@ class MCTS(Planner):
         if self.config.SOCIAL_POLICY.type == "sprnn":
             from policies.social_policies.sprnn_predictor import SprnnPolicy
             self.soc_policy = SprnnPolicy(self.config, self.logger, self.device)
+        elif self.config.SOCIAL_POLICY.type == "uniform":
+            self.soc_policy = 'uniform'
+        elif self.config.SOCIAL_POLICY.type == "random":
+            from policies.social_policies.random_predictor import RandomPolicy
+            self.soc_policy = RandomPolicy(self.config)
         else: 
             raise NotImplementedError(f"Policy {self.config.SOCIAL_POLICY.type} not implemented!")
         
@@ -94,6 +99,7 @@ class MCTS(Planner):
 
         # time-based search
         if self.config.PLANNER_POLICY.search == "time":
+
             while (time.time() - start_time) < self.config.PLANNER_POLICY.max_time:
                 self.search(agents, current_agent=current_agent)
                 
@@ -154,12 +160,12 @@ class MCTS(Planner):
         # check if state in prediction policy 
         if state not in self.P_s:
             v_s = self.gym.get_cost(agents)
-
+            v_s = 1.2
             self.N_s[state] = 0
             self.P_s[state] = self.soc_policy.compute_social_action(agents, S, current_agent) 
 
-            # if self.config.VISUALIZATION.visualize:
-            #     self.gym.show_world(agents, show_tree=True, agent_id=current_agent)
+            if self.config.VISUALIZATION.visualize:
+                self.gym.show_world(agents, show_tree=True, agent_id=current_agent)
             
             return v_s, heuristic
         
@@ -190,7 +196,7 @@ class MCTS(Planner):
                     best_action = action
         
         action = best_action
-       
+        print(action)
         new_state = self.gym.get_next_state(agents[current_agent].state, action)
         agents[current_agent].set_state(new_state)
         agents[current_agent].add_tree_state(new_state)

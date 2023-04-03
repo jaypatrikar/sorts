@@ -9,7 +9,7 @@ from scipy.spatial.transform import Rotation as R
 from gym.agent import Agent
 from utils.common import DIR_LOOKUP, RADIUS, COLORS
 
-def spawn_agents(self, angle_step: int = 45) -> None:
+def spawn_agents(self, scheme="rand", angle_step: int = 45) -> None:
     """ Spawns agents in the environment. 
     
     Inputs
@@ -21,7 +21,8 @@ def spawn_agents(self, angle_step: int = 45) -> None:
     agents[List[Agent]]: list of agents spawend in the environment.
     """
     angle_deg = np.random.choice(np.arange(0, 360, angle_step), self.num_init_agents, replace=False)
-    
+    if scheme == "hil":
+        angle_deg = [180,0]
     agents = []
     for i in range(self.num_init_agents):
         state, goal, ref_trajectory = self.create_valid_spawn(angle_deg[i])
