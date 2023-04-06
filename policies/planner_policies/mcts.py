@@ -55,6 +55,9 @@ class MCTS(Planner):
         elif self.config.SOCIAL_POLICY.type == "random":
             from policies.social_policies.random_predictor import RandomPolicy
             self.soc_policy = RandomPolicy(self.config)
+        elif self.config.SOCIAL_POLICY.type == "goal":
+            from policies.social_policies.goal_predictor import GoalPolicy
+            self.soc_policy = GoalPolicy(self.config)
         else: 
             raise NotImplementedError(f"Policy {self.config.SOCIAL_POLICY.type} not implemented!")
         
@@ -105,7 +108,7 @@ class MCTS(Planner):
                 
                 # reset state and tree for next expansion ?
                 agents[current_agent].set_state(agents[current_agent].trajectory[-1])
-                agents[current_agent].add_tree()
+                # agents[current_agent].add_tree()
 
         # tree expansions-based search
         else:
@@ -113,8 +116,11 @@ class MCTS(Planner):
                 self.search(agents, current_agent=current_agent)
                 
                 # reset state and tree for next expansion ?
-                agents[current_agent].set_state(agents[current_agent].trajectory[-1])
-                agents[current_agent].add_tree()
+                
+                agents[0].set_state(agents[0].trajectory[-1])
+                agents[1].set_state(agents[1].trajectory[-1])
+
+                # agents[current_agent].add_tree()
                 
         state = self.gym.get_state_hash(agents=agents, sim=False)
         
@@ -160,9 +166,10 @@ class MCTS(Planner):
         # check if state in prediction policy 
         if state not in self.P_s:
             v_s = self.gym.get_cost(agents)
-            v_s = 1.2
+            v_s = 0.5
             self.N_s[state] = 0
             self.P_s[state] = self.soc_policy.compute_social_action(agents, S, current_agent) 
+            agents[current_agent].add_tree_state(agents[current_agent].state)
 
             if self.config.VISUALIZATION.visualize:
                 self.gym.show_world(agents, show_tree=True, agent_id=current_agent)
@@ -196,10 +203,9 @@ class MCTS(Planner):
                     best_action = action
         
         action = best_action
-        print(action)
+
         new_state = self.gym.get_next_state(agents[current_agent].state, action)
         agents[current_agent].set_state(new_state)
-        agents[current_agent].add_tree_state(new_state)
 
         current_agent = 0 if len(agents) == 1 else self.gym.take_turn(current_agent)
         v, h = self.search(agents, heuristic[action], current_agent)

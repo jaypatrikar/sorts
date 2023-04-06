@@ -91,7 +91,7 @@ class IsaacHIL:
         self.policy.reset()
 
     def run_step(self,curr_state):
-        action = 0
+        # action = 0
         if self.config.VISUALIZATION.visualize:
             self.gym.show_world(self.agents,show_tree=True)
 
@@ -101,7 +101,7 @@ class IsaacHIL:
         pi = self.policy.compute_action_probabilities(agents=self.agents)
 
         # if self.config.GAME.deterministic:
-        #     action = np.argmax(pi)
+        action = np.argmax(pi)
         # else: # sample
         #     action = np.random.choice(self.gym.action_size, size=1, p=pi)[0]
 

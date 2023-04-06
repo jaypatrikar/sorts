@@ -103,14 +103,16 @@ class Visual:
             self.sp.plot(last_state[-1, 0], last_state[-1, 1], color=color, marker='o', markersize=10, alpha=alpha)
             plt.axes
             # plot tree expansions
-            if show_tree and len(agent.tree) > 0:
-                if not agent_id is None and agent_id == id_:
-                    for tree in agent.trees:
-                        tree = torch.cat(agent.tree).numpy()
+        
+
+
+            if show_tree:
+                for tree in agent.tree:
+                    # if len(tree)>0:
+                        # tree = torch.cat(agent.tree).numpy()
                         self.sp.plot(tree[:, 0], tree[:, 1], color='limegreen', linestyle='-', linewidth=3, markersize=4)
                 
-                tree = torch.cat(agent.tree).numpy()
-                self.sp.plot(tree[:, 0], tree[:, 1], color='magenta', linestyle='-', linewidth=2, markersize=4)
+                # self.sp.plot(tree[:, 0], tree[:, 1], color='magenta', linestyle='-', linewidth=2, markersize=4)
 
                 # self.sp.plot(state[:, 0], state[:, 1], color='magenta', linestyle='-', linewidth=6)
 

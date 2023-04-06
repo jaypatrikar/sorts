@@ -17,7 +17,7 @@
 
     "planner_policy": {
         "type": "mcts",
-        "c_uct": 0.002,
+        "c_uct": 5,
         "h_uct": 0,
         "search": "ts",
         "num_ts": 50,
@@ -25,7 +25,7 @@
     },
 
     "social_policy": {
-        "type": "random",
+        "type": "goal",
         "num_predictions": 10,
         "model_config_path": "/home/airlab/ros2_ws/src/intent_isaac/sorts/data/sprnn/config.json",
         "model_path": "/home/airlab/ros2_ws/src/intent_isaac/sorts/data/sprnn/model.pth"
@@ -42,8 +42,8 @@
             "LossOfSeparation_ClosestDistance",
             "LossOfSeparation_Frames"
         ],
-        "collision_threshold": 0.3,
-        "loss_of_separation_threshold": 0.3
+        "collision_threshold": 100,
+        "loss_of_separation_threshold": 100
     },
 
     "data": {
