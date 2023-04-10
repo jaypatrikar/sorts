@@ -99,15 +99,18 @@ class MCTS(Planner):
             probs[np.array(action_size,)]: numpy array with the action probability distribution.
         """
         start_time = time.time()
-
+        total_trees = 0
         # time-based search
         if self.config.PLANNER_POLICY.search == "time":
 
             while (time.time() - start_time) < self.config.PLANNER_POLICY.max_time:
+                total_trees += 1
+                # print("trees",total_trees)
                 self.search(agents, current_agent=current_agent)
-                
+                agents[0].set_state(agents[0].trajectory[-1])
+                agents[1].set_state(agents[1].trajectory[-1])
                 # reset state and tree for next expansion ?
-                agents[current_agent].set_state(agents[current_agent].trajectory[-1])
+                # agents[current_agent].set_state(agents[current_agent].trajectory[-1])
                 # agents[current_agent].add_tree()
 
         # tree expansions-based search
@@ -173,7 +176,7 @@ class MCTS(Planner):
 
             if self.config.VISUALIZATION.visualize:
                 self.gym.show_world(agents, show_tree=True, agent_id=current_agent)
-            
+            # print("leaf")
             return v_s, heuristic
         
         current_best = -float('inf')
@@ -203,7 +206,7 @@ class MCTS(Planner):
                     best_action = action
         
         action = best_action
-
+        # print(action,current_agent)
         new_state = self.gym.get_next_state(agents[current_agent].state, action)
         agents[current_agent].set_state(new_state)
 

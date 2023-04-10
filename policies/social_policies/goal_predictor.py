@@ -22,7 +22,7 @@ class GoalPolicy:
 
     
     def compute_social_action(self, agents: List[Agent], S: np.array, current_agent: int):
-        g = [[-200,0],[200,0]]
+        g = [[-300,0],[300,0]]
 
         val = np.linalg.norm(S[:,-1,:2]-torch.FloatTensor(g[current_agent]),axis=1)
         val = val/np.sum(val)

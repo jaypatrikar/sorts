@@ -24,7 +24,7 @@ class IsaacHIL:
         self.setup()
 
         self.logger.info(f"{self.name} is ready!")
-
+        self.step_number = 0
     @property
     def config(self) -> Config:
         return self._config
@@ -92,12 +92,14 @@ class IsaacHIL:
 
     def run_step(self,curr_state):
         # action = 0
-        if self.config.VISUALIZATION.visualize:
-            self.gym.show_world(self.agents,show_tree=True)
+        # if self.config.VISUALIZATION.visualize:
+        #     self.gym.show_world(self.agents,show_tree=True)
+        self.policy.reset()
 
-
+        self.step_number += 1
         self.agents[0].step(curr_state[0])
         self.agents[1].step(curr_state[1])
+        # print("step",self.step_number,self.agents[0].state)
         pi = self.policy.compute_action_probabilities(agents=self.agents)
 
         # if self.config.GAME.deterministic:
@@ -106,6 +108,6 @@ class IsaacHIL:
         #     action = np.random.choice(self.gym.action_size, size=1, p=pi)[0]
 
         # new_state = self.gym.get_next_state(self.agents[current_agent].trajectory[-1], action)
-
+        print("a",action)
         return action
 

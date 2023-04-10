@@ -19,8 +19,8 @@ class Agent:
         self._goal_state = goal_state
         self._reference_trajectory = reference_trajectory
         self._color = color
-        self._trajectory = [state]
-        self._tree = [self._state]
+        self._trajectory = []
+        self._tree = []
         self._trees = []
         self._id = agent_id
         self._done = False
@@ -114,7 +114,7 @@ class Agent:
         self._tree.append(state.clone())
     
     def step(self, state) -> None:
-        self._trajectory.append(state[:,:].clone())
+        self._trajectory = [state[:,:].clone()]
         self._state = state.clone()
         self._tree = []
         self._trees = []

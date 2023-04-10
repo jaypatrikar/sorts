@@ -33,42 +33,40 @@ class Visual:
         self.sp = self.fig.add_subplot(111)
         self.sp.set_facecolor(f'xkcd:{self.background}')
         self.sp.axis('equal')
-        # self.radar()
+        self.radar()
         # self.runway()
-    
-        plt.xlabel("X (in Km)")
-        plt.ylabel("Y (in Km)")
+        plt.grid(True)
+        plt.xlabel("X (in m)")
+        plt.ylabel("Y (in m)")
 
         if self.full_screen:
             self.fig.canvas.manager.full_screen_toggle()
     
     def radar(self) -> None:
         self.sp.plot(
-            3.7*np.sin(np.linspace(0, 2*np.pi, 100)), 3.7*np.cos(np.linspace(0, 2*np.pi, 100)), 
+            100*np.sin(np.linspace(0, 2*np.pi, 100)), 100*np.cos(np.linspace(0, 2*np.pi, 100)), 
             color='grey', linestyle='--')
-        self.sp.text(2.7,2.7,'2 NM', color = 'grey')
-        self.sp.text(-2.7,-2.7,'2 NM', color = 'grey')
+        self.sp.text(70,70,'100m', color = 'grey')
+        self.sp.text(-70,-70,'100m', color = 'grey')
 
         self.sp.plot(
-            7.4*np.sin(np.linspace(0, 2*np.pi, 100)), 7.4*np.cos(np.linspace(0, 2*np.pi, 100)), 
+            200*np.sin(np.linspace(0, 2*np.pi, 100)), 200*np.cos(np.linspace(0, 2*np.pi, 100)), 
             color='grey', linestyle='--')
-        self.sp.text(5.2,5.2,'4 NM', color = 'grey')
-        self.sp.text(-5.2,-5.2,'4 NM', color = 'grey')
+        self.sp.text(141,141,'200m', color = 'grey')
+        self.sp.text(-141,-141,'200m', color = 'grey')
 
         self.sp.plot(
-            11.26*np.sin(np.linspace(0, 2*np.pi, 100)), 11.26*np.cos(np.linspace(0, 2*np.pi, 100)), 
+            300*np.sin(np.linspace(0, 2*np.pi, 100)), 300*np.cos(np.linspace(0, 2*np.pi, 100)), 
             color='grey', linestyle='--')
-        self.sp.text(8,8,'6 NM', color = 'grey')
-        self.sp.text(-8,-8,'6 NM', color = 'grey')
+        self.sp.text(212,212,'300m', color = 'grey')
+        self.sp.text(-212,-212,'300m', color = 'grey')
 
     def runway(self) -> None:
-        self.sp.plot(1.45, 0, color='cyan', marker='p', markersize=12, zorder=12)
         self.sp.plot(
-            np.linspace(0, 1.45, 100), np.linspace(0, 0, 100), color="black", lw=14, alpha=1, 
+            np.linspace(-200, 200, 100), np.linspace(0, 0, 100), color="green", lw=70, alpha=0.2, 
             zorder=10, label='Runway 2')
-        self.sp.plot(
-            np.linspace(0, 1.45, 100), np.linspace(0, 0, 100), '--', color="white", lw=1, alpha=1, 
-            zorder=10)
+        
+
     
     def plot(self, agents, show: bool = False, show_tree: bool = False, agent_id = None) -> None:
         for agent in agents:
@@ -96,21 +94,23 @@ class Visual:
             # self.sp.plot(ref_traj[:, 0], ref_traj[:, 1] , color=color, linewidth=10, alpha=alpha_ref, zorder=0)
             
             # executed trajectory so far:
-            self.sp.plot(cur_traj[:, 0], cur_traj[:, 1], color=color, linestyle='-', linewidth=4, alpha=alpha)
+            self.sp.plot(last_state[:, 0], last_state[:, 1], color=color, linestyle='-', linewidth=4, alpha=1)
             
             # markers for the start and end of last agent's state:
-            self.sp.plot(last_state[0, 0], last_state[0, 1], color=color, marker='o', markersize=6, alpha=alpha)
-            self.sp.plot(last_state[-1, 0], last_state[-1, 1], color=color, marker='o', markersize=10, alpha=alpha)
+            self.sp.plot(last_state[0, 0], last_state[0, 1], color=color, marker='o', markersize=6, alpha=1)
+            self.sp.plot(last_state[-1, 0], last_state[-1, 1], color=color, marker='o', markersize=10, alpha=1)
             plt.axes
             # plot tree expansions
-        
-
+            lz1 = plt.Circle(( 300 , 0.0 ), 20 ,alpha = 0.5, facecolor = 'darkorange', linestyle = '--', edgecolor = 'darkorange')
+            self.sp.add_artist(lz1)
+            lz2 = plt.Circle(( -300 , 0.0 ), 20 ,alpha = 0.5, facecolor = 'dodgerblue', linestyle = '--', edgecolor = 'dodgerblue')
+            self.sp.add_artist(lz2)
 
             if show_tree:
                 for tree in agent.tree:
                     # if len(tree)>0:
                         # tree = torch.cat(agent.tree).numpy()
-                        self.sp.plot(tree[:, 0], tree[:, 1], color='limegreen', linestyle='-', linewidth=3, markersize=4)
+                        self.sp.plot(tree[:, 0], tree[:, 1], color='limegreen', linestyle='-', linewidth=2, markersize=4,alpha=alpha)
                 
                 # self.sp.plot(tree[:, 0], tree[:, 1], color='magenta', linestyle='-', linewidth=2, markersize=4)
 

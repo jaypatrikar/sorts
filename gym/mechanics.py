@@ -99,7 +99,7 @@ def get_all_next_states(self, agents: List[Agent], agent_id: int):
     trajs[List[Agent]]: list of agents spawend in the environment.
     """
     state = agents[agent_id].state
-    difference = state[-1] - state[-3]
+    difference = state[-1] - state[-10]
     angle = np.arctan2(difference[1], difference[0])
     
     # direction matrix
@@ -121,7 +121,7 @@ def get_next_state(self, state, action):
     -------
     next_state[torch.tensor]: 
     """
-    difference = (state[-1, :] - state[-3, :]).cpu().numpy()
+    difference = (state[-1, :] - state[-10, :]).cpu().numpy()
     angle = np.arctan2(difference[1], difference[0])
 
     # direction matrix

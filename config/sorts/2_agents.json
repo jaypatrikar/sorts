@@ -19,7 +19,7 @@
         "type": "mcts",
         "c_uct": 5,
         "h_uct": 0,
-        "search": "ts",
+        "search": "time",
         "num_ts": 50,
         "max_time": 10
     },
@@ -42,8 +42,8 @@
             "LossOfSeparation_ClosestDistance",
             "LossOfSeparation_Frames"
         ],
-        "collision_threshold": 100,
-        "loss_of_separation_threshold": 100
+        "collision_threshold": 30,
+        "loss_of_separation_threshold": 30
     },
 
     "data": {
