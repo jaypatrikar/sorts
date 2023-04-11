@@ -1,9 +1,12 @@
 import glob 
 import imageio
-import matplotlib.pyplot as plt
 import numpy as np
 import os
 import torch 
+import matplotlib
+
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 from typing import List
 from natsort import natsorted
@@ -38,6 +41,8 @@ class Visual:
         plt.grid(True)
         plt.xlabel("X (in m)")
         plt.ylabel("Y (in m)")
+        plt.xlim([-350,350])
+        plt.ylim([-350,350])
 
         if self.full_screen:
             self.fig.canvas.manager.full_screen_toggle()
@@ -94,11 +99,11 @@ class Visual:
             # self.sp.plot(ref_traj[:, 0], ref_traj[:, 1] , color=color, linewidth=10, alpha=alpha_ref, zorder=0)
             
             # executed trajectory so far:
-            self.sp.plot(last_state[:, 0], last_state[:, 1], color=color, linestyle='-', linewidth=4, alpha=1)
+            self.sp.plot(last_state[:10, 0], last_state[:10, 1], color=color, linestyle='-', linewidth=4, alpha=1)
             
             # markers for the start and end of last agent's state:
             self.sp.plot(last_state[0, 0], last_state[0, 1], color=color, marker='o', markersize=6, alpha=1)
-            self.sp.plot(last_state[-1, 0], last_state[-1, 1], color=color, marker='o', markersize=10, alpha=1)
+            self.sp.plot(last_state[9, 0], last_state[9, 1], color=color, marker='o', markersize=10, alpha=1)
             plt.axes
             # plot tree expansions
             lz1 = plt.Circle(( 300 , 0.0 ), 20 ,alpha = 0.5, facecolor = 'darkorange', linestyle = '--', edgecolor = 'darkorange')

@@ -21,7 +21,7 @@
         "h_uct": 0,
         "search": "time",
         "num_ts": 50,
-        "max_time": 10
+        "max_time": 8
     },
 
     "social_policy": {
@@ -42,8 +42,8 @@
             "LossOfSeparation_ClosestDistance",
             "LossOfSeparation_Frames"
         ],
-        "collision_threshold": 30,
-        "loss_of_separation_threshold": 30
+        "collision_threshold": 70,
+        "loss_of_separation_threshold": 70
     },
 
     "data": {
